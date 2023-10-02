@@ -1,0 +1,2 @@
+This is a simple test file!
+Can be found in the azurite docker container in /data/__blobstorage__ . Should have a unique id
