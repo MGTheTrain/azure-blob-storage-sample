@@ -23,7 +23,6 @@ The Rust sample can be started with `cargo run`. Please note that the azurite do
 
 ```rust
 // Use your public Azure Storage Account credentials
-let account = String::from("devstoreaccount1");
-//Resolves into `devstoreaccount1.blob.core.windows.net`
+let account = String::from("devstoreaccount1"); //Resolves into `devstoreaccount1.blob.core.windows.net`
 let access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
 ```
