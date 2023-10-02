@@ -19,9 +19,10 @@ sudo docker compose up -d --build
 
 2. Run Rust sample
 
-The Rust sample can be started with `cargo run`. Please note that the azurite docker container can not be used for blobs due to missing support for connection strings. Instead the `account` name and `access_key` needs to be provided, e.g.
+The Rust sample can be started with `cargo run`. Please note that the azurite docker container can not be used for blobs due to missing support for connection strings. Instead the `account` name and `access_key` needs to be set, e.g.
 
 ```rust
+// Use your public Azure Storage Account credentials
 let account = String::from("devstoreaccount1");
 //Resolves into `devstoreaccount1.blob.core.windows.net`
 let access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
