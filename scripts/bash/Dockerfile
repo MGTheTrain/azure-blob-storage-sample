@@ -14,7 +14,7 @@ RUN /bin/sh -c "chmod +x *.sh"
 # Build: 
 # sudo docker build -t azure-blob-storage-test:bash .
 # Run: 
-# - [Enter docker container] 
+# - [Allocate a tty for the interactive container process] 
 #   sudo docker run --rm --network azure-blob-storage_custom-network -it azure-blob-storage-test:bash bash
 #   ping azurite # we should see here responses from the azurite docker container
 # - [Use bash script once trough docker container] 
