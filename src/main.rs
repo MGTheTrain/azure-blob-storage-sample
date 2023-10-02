@@ -9,8 +9,8 @@ async fn main() -> azure_core::Result<()> {
     // let file_name = String::from("azure_sdk_for_rust_stream_test.txt");
 
     // First we retrieve the account name and access key from environment variables.
-    let account = String::from("http://127.0.0.1:10000/devstoreaccount1");
-    //127.0.0.1:10000/devstoreaccount1.blob.core.windows.net
+    let account = String::from("devstoreaccount1");
+    //devstoreaccount1.blob.core.windows.net
     let access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
 
     // let container = String::from("mycontainer");
