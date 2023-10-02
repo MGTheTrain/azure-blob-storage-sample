@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'azure-blob-storage'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=azure-blob-storage",
+                    "--package=azure-blob-storage"
+                ],
+                "filter": {
+                    "name": "azure-blob-storage",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'azure-blob-storage'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=azure-blob-storage",
+                    "--package=azure-blob-storage"
+                ],
+                "filter": {
+                    "name": "azure-blob-storage",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
