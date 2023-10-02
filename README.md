@@ -1,6 +1,6 @@
 # azure-blob-storage-sample
 
-Repo demonstrating how to interface (up- and download blobs) with public Azure Storage Account Services with Rust and required third-party crates.
+Repository demonstrating how to interface (up- and download blobs) with public Azure Storage Account Services with Rust and required third-party crates.
 
 ## How to use
 
@@ -14,8 +14,8 @@ sudo docker compose up -d --build
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing the azurite docker container. | 
-| Python | Navigate to the [python scripts](./scripts/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing the azurite docker container. | 
+| Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
+| Python | Navigate to the [python scripts](./scripts/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
 
 2. Run Rust sample
 
