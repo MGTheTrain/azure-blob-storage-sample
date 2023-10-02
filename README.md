@@ -4,7 +4,7 @@ Repository demonstrating how to interface (up- and download blobs) with public A
 
 ## How to use
 
-0. Run the docker compose cluster to have Azurite locally:
+0. Run the docker compose cluster to have an Azurite docker container locally running:
 
 ```bash
 sudo docker compose up -d --build
