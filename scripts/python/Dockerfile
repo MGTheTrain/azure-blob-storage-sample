@@ -9,7 +9,7 @@ RUN /bin/sh -c "pip install -r requirements.txt"
 # Build: 
 # sudo docker build -t azure-blob-storage-test:python .
 # Run: 
-# - [Enter docker container] 
+# - [Allocate a tty for the interactive container process] 
 #   sudo docker run --rm --network azure-blob-storage_custom-network -it azure-blob-storage-test:python sh
 #   ping azurite
 #   python upload-file-to-az-storage-account-container.py --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;" --container-name "my-container" --blob-name "python-sample.txt" --local-file-path "python-sample.txt"
