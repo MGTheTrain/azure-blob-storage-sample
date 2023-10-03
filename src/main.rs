@@ -1,4 +1,4 @@
-use std::{env, fs};
+use std::{env, fs::{self, File}, io::{BufReader, Read, Write}};
 
 use azure_core::Error;
 use azure_storage::prelude::*;
@@ -31,35 +31,42 @@ async fn main() -> azure_core::Result<()> {
         access_key = value;
     } 
 
-    let container_name = "rust-upload-test";
-    let blob_name = "sample-blob";
+    let container_name = "rust-upload-test"; // manually create Azure Storage Account service container in Azure portal for now
+    let blob_name = "sample.txt";
+    let upload_file_path = "sample.txt";
+    let download_file_path = "temp/copy-sample.txt";
 
     let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
     let client = ClientBuilder::new(account, storage_credentials).blob_client(container_name, blob_name);
 
-    upload_sample_blob(&client).await?;
+    upload_blob(&client, upload_file_path).await?;
+    download_blob(&client, download_file_path).await?;
 
     Ok(())
 }
 
-async fn upload_sample_blob(client: &BlobClient) -> Result<(), Error> {
-    client.put_block_blob("hello world").content_type("text/plain").await?;
+async fn upload_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> {
+    let f = File::open(file_path)?;
+    let mut reader = BufReader::new(f);
+    let mut buffer = Vec::new();
 
-    let mut result: Vec<u8> = vec![];
+    // Read file into vector.
+    reader.read_to_end(&mut buffer)?;
 
-    // The stream is composed of individual calls to the get blob endpoint
-    let mut stream = client.get().into_stream();
-    while let Some(value) = stream.next().await {
-        let mut body = value?.data;
-        // For each response, we stream the body instead of collecting it all
-        // into one large allocation.
-        while let Some(value) = body.next().await {
-            let value = value?;
-            result.extend(&value);
-        }
-    }
+    // client.put_block_blob("hello world").content_type("text/plain").await?;
+    client.put_block_blob(buffer).await?;
+    Ok(())
+}
 
-    println!("result: {:?}", result);
+async fn download_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> {
+    let data = client.get_content().await?;
+
+    let mut file = fs::OpenOptions::new()
+        .create(true) // To create a new file
+        .write(true)
+        .open(file_path)?;
+
+    file.write_all(&data)?;
 
     Ok(())
 }
