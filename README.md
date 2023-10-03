@@ -8,7 +8,7 @@
 
 ## Summary
 
-Repository demonstrating how to interface (up- and download blobs) with public Azure Storage Account Services with Rust and required third-party crates.
+Repository demonstrating how to manage blobs in public Azure Storage Account Services container with Rust and required third-party crates.
 
 ## References
 
