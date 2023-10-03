@@ -12,7 +12,7 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 
 ## References
 
-- [azure-sdk-for-rust](https://github.com/Azure/azure-sdk-for-rust)
+- [azure_storage_blobs samples](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/storage_blobs)
 
 ## How to use
 
