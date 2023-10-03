@@ -1,66 +1,65 @@
-use azure_core::prelude::*;
+use std::{env, fs};
+
+use azure_core::Error;
 use azure_storage::prelude::*;
-use azure_storage_blobs::{container::PublicAccess, prelude::*};
-use bytes::Bytes;
+use azure_storage_blobs::prelude::*;
 use futures::StreamExt;
+
+fn set_env_var(env_var_name: &str) -> Option<String> {
+    match env::var(env_var_name) {
+        Ok(value) => {
+            // Print the value if needed
+            // println!("Value of {} is: {}", env_var_name, value);
+            Some(value)
+        }
+        Err(_) => {
+            println!("{} is not set.", env_var_name);
+            None
+        }
+    }
+}
 
 #[tokio::main]
 async fn main() -> azure_core::Result<()> {
-    // let file_name = String::from("azure_sdk_for_rust_stream_test.txt");
+    let mut account = String::from("devstoreaccount1"); //resolves to devstoreaccount1.blob.core.windows.net
+    let mut access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
 
-    // First we retrieve the account name and access key from environment variables.
-    let account = String::from("devstoreaccount1");
-    //devstoreaccount1.blob.core.windows.net
-    let access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
+    if let Some(value) = set_env_var("AZURE_ACCOUNT_NAME") {
+        account = value;
+    } 
+    if let Some(value) = set_env_var("AZURE_ACCESS_KEY") {
+        access_key = value;
+    } 
 
-    // let container = String::from("mycontainer");
-    // let blob_name = String::from("test.txt");
-    let blob_name: &'static str = "append_blob.txt";
-    let container_name: &'static str = "rust-upload-test";
-    let _data = b"abcdef";
+    let container_name = "rust-upload-test";
+    let blob_name = "sample-blob";
 
     let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
-    let blob_service = BlobServiceClient::new(account, storage_credentials);
-    let container = blob_service.container_client(container_name);
-    let blob = container.blob_client(blob_name);
+    let client = ClientBuilder::new(account, storage_credentials).blob_client(container_name, blob_name);
 
-    if !blob_service
-        .list_containers()
-        .into_stream()
-        .next()
-        .await
-        .unwrap()
-        .unwrap()
-        .containers
-        .iter()
-        .any(|x| x.name == container_name)
-    {
-        container
-            .create()
-            .public_access(PublicAccess::None)
-            .await
-            .unwrap();
+    upload_sample_blob(&client).await?;
+
+    Ok(())
+}
+
+async fn upload_sample_blob(client: &BlobClient) -> Result<(), Error> {
+    client.put_block_blob("hello world").content_type("text/plain").await?;
+
+    let mut result: Vec<u8> = vec![];
+
+    // The stream is composed of individual calls to the get blob endpoint
+    let mut stream = client.get().into_stream();
+    while let Some(value) = stream.next().await {
+        let mut body = value?.data;
+        // For each response, we stream the body instead of collecting it all
+        // into one large allocation.
+        while let Some(value) = body.next().await {
+            let value = value?;
+            result.extend(&value);
+        }
     }
 
-    let mut metadata = Metadata::new();
-    metadata.insert("attrib", "value");
-    metadata.insert("second", "something");
-
-    blob.put_append_blob()
-        .content_type("text/plain")
-        .metadata(metadata)
-        .await
-        .unwrap();
-
-    println!("created {:?}", blob_name);
-
-    let resp = blob.get_metadata().await.unwrap();
-
-    assert_eq!(resp.metadata.len(), 2);
-
-    assert_eq!(resp.metadata.get("attrib"), Some(Bytes::from("value")));
-    assert_eq!(resp.metadata.get("second"), Some(Bytes::from("something")));
-    assert_eq!(resp.metadata.get("not_found"), None);
+    println!("result: {:?}", result);
 
     Ok(())
 }
