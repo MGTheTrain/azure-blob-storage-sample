@@ -1,6 +1,18 @@
 # azure-blob-storage-sample
 
+## Table of Contents
+
++ [Summary](#summary)
++ [References](#references)
++ [How to use](#how-to-use)
+
+## Summary
+
 Repository demonstrating how to interface (up- and download blobs) with public Azure Storage Account Services with Rust and required third-party crates.
+
+## References
+
+/
 
 ## How to use
 
