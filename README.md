@@ -31,10 +31,12 @@ sudo docker compose up -d --build
 
 **2. Run Rust sample**
 
-The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the azurite docker container can not be used for blob management (up-, download, deletion, metadata retrieval, etc.) here due to missing support for connection strings. Instead the `account` name and `access_key` needs to be set in the [main.rs](./src/main.rs), e.g.
+The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the azurite docker container can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.). You need to utilize a public Azure Storage Account Service container.
 
-```rust
-// Use your public Azure Storage Account credentials
-let account = String::from("devstoreaccount1"); //Resolves into `devstoreaccount1.blob.core.windows.net`
-let access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
+Therefore create from the [secrets.cfg.template](./secrets.cfg.template) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
+Afterwards execute the following:
+
+```bash
+source secrets.cfg
+cargo run
 ```
