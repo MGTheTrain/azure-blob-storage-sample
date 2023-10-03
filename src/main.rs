@@ -41,6 +41,7 @@ async fn main() -> azure_core::Result<()> {
 
     upload_blob(&client, upload_file_path).await?;
     download_blob(&client, download_file_path).await?;
+    delete_blob(&client).await?;
 
     Ok(())
 }
@@ -71,4 +72,8 @@ async fn download_blob(client: &BlobClient, file_path: &str) -> Result<(), Error
     Ok(())
 }
 
-// TBD: blob download, blob deletion
+async fn delete_blob(client: &BlobClient) -> Result<(), Error> {
+    client.delete().await?;
+
+    Ok(())
+}
