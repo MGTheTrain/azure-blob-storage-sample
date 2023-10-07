@@ -39,6 +39,10 @@ async fn main() -> azure_core::Result<()> {
     let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
     let client = ClientBuilder::new(account, storage_credentials).blob_client(container_name, blob_name);
 
+    // NOTE: Preferably utilize the container client when developing a singleton struct
+    // let client = ClientBuilder::new(account, storage_credentials).container_client(container_name);
+    // client.blob_client(blob_name);
+
     upload_blob(&client, upload_file_path).await?;
     download_blob(&client, download_file_path).await?;
     delete_blob(&client).await?;
