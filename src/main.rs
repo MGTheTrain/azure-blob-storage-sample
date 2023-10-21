@@ -31,7 +31,8 @@ async fn main() -> azure_core::Result<()> {
         access_key = value;
     } 
 
-    let container_name = "rust-upload-test"; // manually create Azure Storage Account service container in Azure portal for now
+    let container_name = std::env::var("AZURE_CONTAINER_NAME").
+        expect("AZURE_CONTAINER_NAME environment variable expected");
     let blob_name = "sample.txt";
     let upload_file_path = "sample.txt";
     let download_file_path = "temp/copy-sample.txt";
