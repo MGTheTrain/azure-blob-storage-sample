@@ -13,6 +13,7 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 ## References
 
 - [azure_storage_blobs samples](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/storage_blobs)
+- [Clap cli crate - Handling arguments and subcommands](https://rust-cli-recommendations.sunshowers.io/handling-arguments.html)
 
 ## How to use
 
