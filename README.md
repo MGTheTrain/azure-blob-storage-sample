@@ -17,20 +17,22 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 
 ## How to use
 
-**0. Run the docker compose cluster to have an Azurite docker container locally running:**
+### Optional
+
+#### Run the docker compose cluster to have an Azurite docker container locally running
 
 ```bash
 sudo docker compose up -d --build
 ```
 
-**1. Run tests**
+#### Run tests
 
 | Scripting language | Description | 
 |----------|----------|
 | Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
 | Python | Navigate to the [python scripts](./scripts/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
 
-**2. Run Rust sample**
+### Rust
 
 The [Rust sample](./src/main.rs) can be started with `cargo run` and tests can be run with `RUST_LOG=info cargo test` in a Unix terminal (Git Bash on Windows OS, etc.). Please note that the azurite docker container can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public Azure Storage Account Service container.
 
