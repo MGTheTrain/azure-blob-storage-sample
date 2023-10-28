@@ -105,11 +105,6 @@ async fn main() -> azure_core::Result<()> {
         }
     }
 
-    // let blob_name = "sample.txt";
-    // let upload_file_path = "sample.txt";
-    // let download_file_path = "output/copy-sample.txt";
-
-
     // NOTE: Preferably utilize the container client when developing a singleton struct
     // let client = ClientBuilder::new(account, storage_credentials).container_client(container_name);
     // client.blob_client(blob_name);
