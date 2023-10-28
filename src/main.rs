@@ -30,7 +30,7 @@ struct Cli {
 async fn main() -> azure_core::Result<()> {
     env_logger::init();
         
-    let env_file_path = "./templates/secrets.cfg";
+    let env_file_path = "secrets.cfg";
     dotenv::from_path(env_file_path).ok();
 
     let mut account = String::from("devstoreaccount1"); //resolves to devstoreaccount1.blob.core.windows.net
@@ -171,7 +171,7 @@ mod tests {
     pub async fn test_azure_blob_storage_methods() -> Result<(), Box<dyn std::error::Error>>{
         env_logger::init();
         
-        let env_file_path = "./templates/secrets.cfg";
+        let env_file_path = "secrets.cfg";
         dotenv::from_path(env_file_path).ok();
 
         let mut account = String::from("devstoreaccount1"); //resolves to devstoreaccount1.blob.core.windows.net

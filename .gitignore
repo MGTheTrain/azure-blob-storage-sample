@@ -1,4 +1,4 @@
 **/target
 secrets.cfg
-temp/*.txt
 Cargo.lock
+*exe

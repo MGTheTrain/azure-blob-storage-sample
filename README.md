@@ -33,7 +33,7 @@ sudo docker compose up -d --build
 
 The [Rust sample](./src/main.rs) can be started with `cargo run` and tests can be run with `RUST_LOG=info cargo test` in a Unix terminal (Git Bash on Windows OS, etc.). Please note that the azurite docker container can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public Azure Storage Account Service container.
 
-Therefore create from the [secrets.template.cfg](./templates/secrets.template.cfg) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
+Therefore create from the [secrets.template.cfg](./secrets.template.cfg) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
 Afterwards execute the following to run the tests:
 
 ```bash
@@ -43,6 +43,24 @@ cargo test
 In order to build and run the main executable run:
 
 ```bash
-TBD
-cargo run 
+cargo build
+
+# Example upload: 
+cargo.exe run -- -o upload -b blob.txt  -u sample.txt
+cargo.exe run -- --operation upload --blob-name blob.txt --upload-file-path sample.txt 
+
+# Example download: 
+cargo.exe run -- -o download -b blob.txt -d output/download.txt
+cargo.exe run -- --operation download --blob-name blob.txt --download-file-path "output/download.txt"
+
+# Example delete: 
+cargo.exe run -- -o delete -b blob.txt
+cargo.exe run -- --operation delete --blob-name blob.txt
+
+# or running the executable  
+cp target/debug/azure-blob-storage.exe .
+source secrets.cfg
+./azure-blob-storage.exe --help
+# Example upload: 
+./azure-blob-storage.exe --operation upload --blob-name blob.txt --upload-file-path sample.txt 
 ```
