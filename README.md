@@ -61,6 +61,6 @@ cargo.exe run -- delete --blob-name blob.txt
 cp target/debug/azure-blob-storage.exe .
 source secrets.cfg
 ./azure-blob-storage.exe --help
-# Example upload: 
+# Example upload (Note: Colored crates console logs might not work on certain terminals): 
 ./azure-blob-storage.exe upload --blob-name blob.txt --upload-file-path sample.txt 
 ```
