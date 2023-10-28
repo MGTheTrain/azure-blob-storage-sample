@@ -104,10 +104,6 @@ async fn main() -> azure_core::Result<()> {
             }
         }
     }
-
-    // NOTE: Preferably utilize the container client when developing a singleton struct
-    // let client = ClientBuilder::new(account, storage_credentials).container_client(container_name);
-    // client.blob_client(blob_name);
     
     Ok(())
 }
