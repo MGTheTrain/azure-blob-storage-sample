@@ -33,10 +33,10 @@ sudo docker compose up -d --build
 
 The [Rust sample](./src/main.rs) can be started with `cargo run`. Please note that the azurite docker container can not be used for local blob management tests (up-, download, deletion, metadata retrieval, etc.) on Windows 10 OS. You need to utilize a public Azure Storage Account Service container.
 
-Therefore create from the [secrets.template.cfg](./temp/secrets.template.cfg) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
+Therefore create from the [secrets.template.cfg](./templates/secrets.template.cfg) a `secrets.cfg` file and replace the `<PLACEHOLDER_*>` values.
 Afterwards execute the following:
 
 ```bash
-source temp/secrets.cfg
+source templates/secrets.cfg
 cargo run
 ```
