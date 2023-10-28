@@ -46,21 +46,21 @@ In order to build and run the main executable run:
 cargo build
 
 # Example upload: 
-cargo.exe run -- -o upload -b blob.txt  -u sample.txt
-cargo.exe run -- --operation upload --blob-name blob.txt --upload-file-path sample.txt 
+cargo.exe run -- upload -b blob.txt  -u sample.txt
+cargo.exe run -- upload --blob-name blob.txt --upload-file-path sample.txt 
 
 # Example download: 
-cargo.exe run -- -o download -b blob.txt -d output/download.txt
-cargo.exe run -- --operation download --blob-name blob.txt --download-file-path "output/download.txt"
+cargo.exe run -- download -b blob.txt -d output/download.txt
+cargo.exe run -- download --blob-name blob.txt --download-file-path "output/download.txt"
 
 # Example delete: 
-cargo.exe run -- -o delete -b blob.txt
-cargo.exe run -- --operation delete --blob-name blob.txt
+cargo.exe run -- delete -b blob.txt
+cargo.exe run -- delete --blob-name blob.txt
 
 # or running the executable  
 cp target/debug/azure-blob-storage.exe .
 source secrets.cfg
 ./azure-blob-storage.exe --help
 # Example upload: 
-./azure-blob-storage.exe --operation upload --blob-name blob.txt --upload-file-path sample.txt 
+./azure-blob-storage.exe upload --blob-name blob.txt --upload-file-path sample.txt 
 ```
