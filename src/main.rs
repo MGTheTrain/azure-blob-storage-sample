@@ -49,6 +49,7 @@ enum AzureStorageAccountContainerOperation {
 
 #[tokio::main]
 async fn main() -> azure_core::Result<()> {
+    env_logger::init();
     let mut colored_string: colored::ColoredString;
         
     let env_file_path = "secrets.cfg";
@@ -64,8 +65,9 @@ async fn main() -> azure_core::Result<()> {
         access_key = value;
     } 
 
+    colored_string = "Error: AZURE_CONTAINER_NAME environment variable expected".red();
     let container_name = std::env::var("AZURE_CONTAINER_NAME").
-        expect("AZURE_CONTAINER_NAME environment variable expected");
+        expect(&colored_string.to_string());
 
     // parse args
     let args = Cli::parse();
@@ -73,7 +75,7 @@ async fn main() -> azure_core::Result<()> {
     match &args.operation {
         AzureStorageAccountContainerOperation::Upload { upload_file_path, blob_name } => {
             colored_string = "Selected operation: Upload".blue();
-            println!("{}", colored_string);
+            info!("{}", colored_string);
 
             if blob_name.is_none() {
                 colored_string = "Error: --blob-name input argument needs to be set".red();
@@ -93,7 +95,7 @@ async fn main() -> azure_core::Result<()> {
         },
         AzureStorageAccountContainerOperation::Download { download_file_path, blob_name } => {
             colored_string = "Selected operation: Download".blue();
-            println!("{}", colored_string);
+            info!("{}", colored_string);
 
             if blob_name.is_none() {
                 colored_string =  "Error: --blob-name input argument needs to be set".red();
@@ -113,7 +115,7 @@ async fn main() -> azure_core::Result<()> {
         },
         AzureStorageAccountContainerOperation::Delete { blob_name } => {
             colored_string = "Selected operation: Delete".blue();
-            println!("{}", colored_string);
+            info!("{}", colored_string);
 
             if blob_name.is_none() {
                 colored_string =  "Error: --blob-name input argument needs to be set".red();
@@ -127,7 +129,7 @@ async fn main() -> azure_core::Result<()> {
             delete_blob(&client).await?;
         },
         _ => {
-            colored_string = "Error: Blob operation not supported".red();
+            colored_string = "Error: Operation not supported".red();
             panic!("{}", colored_string)
         }
     }
@@ -141,7 +143,7 @@ fn set_env_var(env_var_name: &str) -> Option<String> {
             Some(value)
         }
         Err(_) => {
-            println!("{} is not set.", env_var_name.blue());
+            info!("{} is not set.", env_var_name.blue());
             None
         }
     }
@@ -160,7 +162,7 @@ async fn upload_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> 
 
     let mut colored_string: colored::ColoredString;
     colored_string = format!("Successfully uploaded {} blob", client.blob_name()).blue();
-    println!("{}", colored_string);
+    info!("{}", colored_string);
 
     Ok(())
 }
@@ -177,7 +179,7 @@ async fn download_blob(client: &BlobClient, file_path: &str) -> Result<(), Error
 
     let mut colored_string: colored::ColoredString;
     colored_string = format!("Successfully downloaded {} blob", client.blob_name()).blue();
-    println!("{}", colored_string);
+    info!("{}", colored_string);
 
     Ok(())
 }
@@ -187,7 +189,7 @@ async fn delete_blob(client: &BlobClient) -> Result<(), Error> {
     
     let mut colored_string: colored::ColoredString;
     colored_string = format!("Successfully deleted {} blob", client.blob_name()).blue();
-    println!("{}", colored_string);
+    info!("{}", colored_string);
 
     Ok(())
 }

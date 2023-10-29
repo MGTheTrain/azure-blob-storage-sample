@@ -36,16 +36,16 @@ In order to build and run the main executable run:
 cargo build
 
 # Example upload: 
-cargo.exe run -- upload -b blob.txt  -u sample.txt
-cargo.exe run -- upload --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info cargo run -- upload -b blob.txt  -u sample.txt
+RUST_LOG=info cargo run -- upload --blob-name blob.txt --upload-file-path sample.txt 
 
 # Example download: 
-cargo.exe run -- download -b blob.txt -d output/download.txt
-cargo.exe run -- download --blob-name blob.txt --download-file-path "output/download.txt"
+RUST_LOG=info cargo run -- download -b blob.txt -d output/download.txt
+RUST_LOG=info cargo run -- download --blob-name blob.txt --download-file-path "output/download.txt"
 
 # Example delete: 
-cargo.exe run -- delete -b blob.txt
-cargo.exe run -- delete --blob-name blob.txt
+RUST_LOG=info cargo run -- delete -b blob.txt
+RUST_LOG=info cargo run -- delete --blob-name blob.txt
 
 # or running the executable  
 cp target/debug/azure-blob-storage.exe .
