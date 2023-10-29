@@ -26,6 +26,8 @@ Afterwards execute the following to run the tests:
 
 ```bash
 cargo test
+# cosidering logs execute
+RUST_LOG=info cargo test
 ```
 
 In order to build and run the main executable run:
