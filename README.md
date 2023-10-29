@@ -26,7 +26,7 @@ Afterwards execute the following to run the tests:
 
 ```bash
 cargo test
-# cosidering logs execute
+# for more logs execute
 RUST_LOG=info cargo test
 ```
 
