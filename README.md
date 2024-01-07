@@ -2,9 +2,13 @@
 
 ## Table of Contents
 
-+ [Summary](#summary)
-+ [References](#references)
-+ [How to use](#how-to-use)
+- [Summary](#summary)
+- [References](#references)
+- [How to use](#how-to-use)
+  - [Rust](#rust)
+  - [Optional](#optional)
+    - [Initiate the Docker Compose cluster to launch a locally running Azurite Docker container](#initiate-the-docker-compose-cluster-to-launch-a-locally-running-azurite-docker-container)
+    - [Run tests](#run-tests)
 
 ## Summary
 
