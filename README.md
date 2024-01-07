@@ -30,7 +30,7 @@ cargo test
 RUST_LOG=info cargo test
 ```
 
-In order to build and run the main executable run:
+Build and run the executable binary with:
 
 ```bash
 cargo build
@@ -57,7 +57,7 @@ RUST_LOG=info ./azure-blob-storage upload --blob-name blob.txt --upload-file-pat
 
 ### Optional
 
-#### Run the docker compose cluster to have an Azurite docker container locally running
+#### Initiate the Docker Compose cluster to launch a locally running Azurite Docker container
 
 ```bash
 sudo docker compose up -d --build
