@@ -40,8 +40,8 @@ Build and run the executable binary with:
 cargo build
 
 # Example upload: 
-RUST_LOG=info cargo run -- upload -b blob.txt  -u sample.txt
-RUST_LOG=info cargo run -- upload --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info cargo run -- upload -b blob.txt  -u assets/sample.txt
+RUST_LOG=info cargo run -- upload --blob-name blob.txt --upload-file-path assets/sample.txt 
 
 # Example download: 
 RUST_LOG=info cargo run -- download -b blob.txt -d output/download.txt
@@ -56,7 +56,7 @@ cp target/debug/azure_blob_storage_sample.exe . # On Windows OS when utilizing G
 source secrets.cfg
 ./azure_blob_storage_sample --help
 # Example upload (Note: Colored crates console logs might not work on certain terminals): 
-RUST_LOG=info ./azure_blob_storage_sample upload --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info ./azure_blob_storage_sample upload --blob-name blob.txt --upload-file-path assets/sample.txt 
 ```
 
 ### Optional
