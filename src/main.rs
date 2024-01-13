@@ -14,7 +14,6 @@ use clap::{Parser, Subcommand};
 
 use colored::Colorize;
 
-/// Provide arguments for
 #[derive(Parser, Debug)]
 #[clap(
     author = "MGTheTrain",
@@ -22,7 +21,6 @@ use colored::Colorize;
     about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) in an Azure Storage Account Container."
 )]
 struct Cli {
-    /// the azure storage account container pperation
     #[clap(subcommand)]
     operation: AzureStorageAccountContainerOperation,
 }
@@ -63,7 +61,7 @@ async fn main() -> azure_core::Result<()> {
     let env_file_path = "secrets.cfg";
     dotenv::from_path(env_file_path).ok();
 
-    let mut account = String::from("devstoreaccount1"); //resolves to devstoreaccount1.blob.core.windows.net
+    let mut account = String::from("devstoreaccount1"); 
     let mut access_key = String::from(
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
     );
@@ -78,7 +76,6 @@ async fn main() -> azure_core::Result<()> {
     colored_string = "Error: AZURE_CONTAINER_NAME environment variable expected".red();
     let container_name = std::env::var("AZURE_CONTAINER_NAME").expect(&colored_string.to_string());
 
-    // parse args
     let args = Cli::parse();
 
     match &args.operation {
@@ -167,7 +164,6 @@ async fn upload_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> 
     let mut reader = BufReader::new(f);
     let mut buffer = Vec::new();
 
-    // Read file into vector.
     reader.read_to_end(&mut buffer)?;
 
     // client.put_block_blob("hello world").content_type("text/plain").await?;
@@ -184,7 +180,7 @@ async fn download_blob(client: &BlobClient, file_path: &str) -> Result<(), Error
     let data = client.get_content().await?;
 
     let mut file = fs::OpenOptions::new()
-        .create(true) // To create a new file
+        .create(true) 
         .write(true)
         .open(file_path)?;
 
@@ -222,7 +218,7 @@ mod tests {
         let env_file_path = "secrets.cfg";
         dotenv::from_path(env_file_path).ok();
 
-        let mut account = String::from("devstoreaccount1"); //resolves to devstoreaccount1.blob.core.windows.net
+        let mut account = String::from("devstoreaccount1"); 
         let mut access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
 
         if let Some(value) = set_env_var("AZURE_ACCOUNT_NAME") {
