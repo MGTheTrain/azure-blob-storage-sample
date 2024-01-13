@@ -34,7 +34,7 @@ cargo test
 RUST_LOG=info cargo test
 ```
 
-Build and run the executable binary with:
+Build and run the cli tool/application binary with:
 
 ```bash
 # Example upload: 
