@@ -37,8 +37,6 @@ RUST_LOG=info cargo test
 Build and run the executable binary with:
 
 ```bash
-cargo build
-
 # Example upload: 
 RUST_LOG=info cargo run -- upload -b blob.txt  -u assets/sample.txt
 RUST_LOG=info cargo run -- upload --blob-name blob.txt --upload-file-path assets/sample.txt 
@@ -51,12 +49,14 @@ RUST_LOG=info cargo run -- download --blob-name blob.txt --download-file-path "o
 RUST_LOG=info cargo run -- delete -b blob.txt
 RUST_LOG=info cargo run -- delete --blob-name blob.txt
 
-# or running the executable  
-cp target/debug/azure_blob_storage_sample.exe . # On Windows OS when utilizing Git Bash or WSL
+#####################################################################################################################
+# Building and running the executable without cargo  
+cargo build
+cp target/debug/azure_blob_handler.exe . # On Windows OS when utilizing Git Bash or WSL
 source secrets.cfg
-./azure_blob_storage_sample --help
+./azure_blob_handler --help
 # Example upload (Note: Colored crates console logs might not work on certain terminals): 
-RUST_LOG=info ./azure_blob_storage_sample upload --blob-name blob.txt --upload-file-path assets/sample.txt 
+RUST_LOG=info ./azure_blob_handler upload --blob-name blob.txt --upload-file-path assets/sample.txt 
 ```
 
 ### Optional
