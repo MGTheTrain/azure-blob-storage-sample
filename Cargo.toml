@@ -5,6 +5,10 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "azure_blob_storage_sample"
+path = "src/main.rs" 
+
 [lib]
 name = "common_modules"
 path = "modules/lib.rs"
