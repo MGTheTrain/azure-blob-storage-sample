@@ -8,8 +8,8 @@ use azure_storage::StorageCredentials;
 use azure_core::Error;
 use azure_storage_blobs::prelude::*;
 
-use log::info;
 use colored::Colorize;
+use log::info;
 
 pub struct AzureBlobHandler {
     client: BlobClient,

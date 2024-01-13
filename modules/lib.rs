@@ -1,6 +1,6 @@
-use std::env;
-use log::info;
 use colored::Colorize;
+use log::info;
+use std::env;
 
 pub mod azure_connectors {
     pub mod azure_blob_handler;

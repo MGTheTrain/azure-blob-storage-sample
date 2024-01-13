@@ -1,4 +1,3 @@
-
 #[cfg(test)]
 mod tests {
     use common_modules::azure_connectors::azure_blob_handler::AzureBlobHandler;
