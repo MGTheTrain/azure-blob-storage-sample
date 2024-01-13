@@ -1,5 +1,5 @@
 [package]
-name = "azure_blob_storage_sample"
+name = "azure_blob_handler"
 version = "0.1.0"
 edition = "2021"
 
