@@ -7,8 +7,6 @@
 - [How to use](#how-to-use)
   - [Rust](#rust)
   - [Optional](#optional)
-    - [Initiate the Docker Compose cluster to launch a locally running Azurite Docker container](#initiate-the-docker-compose-cluster-to-launch-a-locally-running-azurite-docker-container)
-    - [Run tests](#run-tests)
 
 ## Summary
 
@@ -61,7 +59,7 @@ RUST_LOG=info ./azure_blob_handler upload --blob-name blob.txt --upload-file-pat
 
 ### Optional
 
-#### Initiate the docker-compose cluster to launch an Azurite docker container
+#### Initiate the docker compose cluster to launch an Azurite docker container
 
 ```bash
 sudo docker compose up -d --build
