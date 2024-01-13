@@ -52,11 +52,11 @@ RUST_LOG=info cargo run -- delete -b blob.txt
 RUST_LOG=info cargo run -- delete --blob-name blob.txt
 
 # or running the executable  
-cp target/debug/azure-blob-storage.exe . # On Windows OS when utilizing Git Bash or WSL
+cp target/debug/azure_blob_storage_sample.exe . # On Windows OS when utilizing Git Bash or WSL
 source secrets.cfg
-./azure-blob-storage --help
+./azure_blob_storage_sample --help
 # Example upload (Note: Colored crates console logs might not work on certain terminals): 
-RUST_LOG=info ./azure-blob-storage upload --blob-name blob.txt --upload-file-path sample.txt 
+RUST_LOG=info ./azure_blob_storage_sample upload --blob-name blob.txt --upload-file-path sample.txt 
 ```
 
 ### Optional
