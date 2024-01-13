@@ -1,4 +1,4 @@
-# rust-azure-blob-storage-sample
+# rust-azure-blob-storage-handler
 
 ## Table of Contents
 
