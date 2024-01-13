@@ -1,9 +1,17 @@
 [package]
-name = "azure-blob-storage"
+name = "azure_blob_storage_sample"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "common_modules"
+path = "modules/lib.rs"
+
+[[test]]
+name = "test_azure_blob_handler"
+path = "test/test_azure_blob_handler.rs"
 
 [dependencies]
 azure_core = "0.16.0"

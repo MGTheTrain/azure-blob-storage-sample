@@ -4,15 +4,14 @@ use std::{
     io::{BufReader, Read, Write},
 };
 
-use azure_storage::StorageCredentials;
 use log::info;
-
-use azure_core::Error;
-use azure_storage_blobs::{blob, prelude::*};
 
 use clap::{Parser, Subcommand};
 
 use colored::Colorize;
+
+use common_modules::azure_connectors::azure_blob_handler::AzureBlobHandler;
+use common_modules::set_env_var;
 
 #[derive(Parser, Debug)]
 #[clap(
@@ -61,7 +60,7 @@ async fn main() -> azure_core::Result<()> {
     let env_file_path = "secrets.cfg";
     dotenv::from_path(env_file_path).ok();
 
-    let mut account = String::from("devstoreaccount1"); 
+    let mut account = String::from("devstoreaccount1");
     let mut access_key = String::from(
         "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==",
     );
@@ -96,11 +95,15 @@ async fn main() -> azure_core::Result<()> {
                 panic!("{}", colored_string)
             }
 
-            let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
-            let client = ClientBuilder::new(account, storage_credentials)
-                .blob_client(container_name, blob_name.clone().unwrap());
-
-            upload_blob(&client, &upload_file_path.clone().unwrap()).await?;
+            let handler = AzureBlobHandler::new(
+                &account,
+                &access_key,
+                &container_name,
+                &blob_name.clone().unwrap(),
+            );
+            handler
+                .upload_blob(&upload_file_path.clone().unwrap())
+                .await?;
         }
         AzureStorageAccountContainerOperation::Download {
             download_file_path,
@@ -119,11 +122,15 @@ async fn main() -> azure_core::Result<()> {
                 panic!("{}", colored_string)
             }
 
-            let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
-            let client = ClientBuilder::new(account, storage_credentials)
-                .blob_client(container_name, blob_name.clone().unwrap());
-
-            download_blob(&client, &download_file_path.clone().unwrap()).await?;
+            let handler = AzureBlobHandler::new(
+                &account,
+                &access_key,
+                &container_name,
+                &blob_name.clone().unwrap(),
+            );
+            handler
+                .download_blob(&download_file_path.clone().unwrap())
+                .await?;
         }
         AzureStorageAccountContainerOperation::Delete { blob_name } => {
             colored_string = "Selected operation: Delete".blue();
@@ -134,11 +141,13 @@ async fn main() -> azure_core::Result<()> {
                 panic!("{}", colored_string)
             }
 
-            let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
-            let client = ClientBuilder::new(account, storage_credentials)
-                .blob_client(container_name, blob_name.clone().unwrap());
-
-            delete_blob(&client).await?;
+            let handler = AzureBlobHandler::new(
+                &account,
+                &access_key,
+                &container_name,
+                &blob_name.clone().unwrap(),
+            );
+            handler.delete_blob().await?;
         }
         _ => {
             colored_string = "Error: Operation not supported".red();
@@ -147,101 +156,4 @@ async fn main() -> azure_core::Result<()> {
     }
 
     Ok(())
-}
-
-fn set_env_var(env_var_name: &str) -> Option<String> {
-    match env::var(env_var_name) {
-        Ok(value) => Some(value),
-        Err(_) => {
-            info!("{} is not set.", env_var_name.blue());
-            None
-        }
-    }
-}
-
-async fn upload_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> {
-    let f = File::open(file_path)?;
-    let mut reader = BufReader::new(f);
-    let mut buffer = Vec::new();
-
-    reader.read_to_end(&mut buffer)?;
-
-    // client.put_block_blob("hello world").content_type("text/plain").await?;
-    client.put_block_blob(buffer).await?;
-
-    let mut colored_string: colored::ColoredString;
-    colored_string = format!("Successfully uploaded {} blob", client.blob_name()).blue();
-    info!("{}", colored_string);
-
-    Ok(())
-}
-
-async fn download_blob(client: &BlobClient, file_path: &str) -> Result<(), Error> {
-    let data = client.get_content().await?;
-
-    let mut file = fs::OpenOptions::new()
-        .create(true) 
-        .write(true)
-        .open(file_path)?;
-
-    file.write_all(&data)?;
-
-    let mut colored_string: colored::ColoredString;
-    colored_string = format!("Successfully downloaded {} blob", client.blob_name()).blue();
-    info!("{}", colored_string);
-
-    Ok(())
-}
-
-async fn delete_blob(client: &BlobClient) -> Result<(), Error> {
-    client.delete().await?;
-
-    let mut colored_string: colored::ColoredString;
-    colored_string = format!("Successfully deleted {} blob", client.blob_name()).blue();
-    info!("{}", colored_string);
-
-    Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::{delete_blob, download_blob, set_env_var, upload_blob};
-    use azure_storage::StorageCredentials;
-    use azure_storage_blobs::prelude::ClientBuilder;
-    use std::env;
-
-    // In order to run the test execute: `RUST_LOG=info cargo test`
-    #[tokio::test]
-    pub async fn test_azure_blob_storage_methods() -> Result<(), Box<dyn std::error::Error>> {
-        env_logger::init();
-
-        let env_file_path = "secrets.cfg";
-        dotenv::from_path(env_file_path).ok();
-
-        let mut account = String::from("devstoreaccount1"); 
-        let mut access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
-
-        if let Some(value) = set_env_var("AZURE_ACCOUNT_NAME") {
-            account = value;
-        }
-        if let Some(value) = set_env_var("AZURE_ACCESS_KEY") {
-            access_key = value;
-        }
-
-        let container_name = std::env::var("AZURE_CONTAINER_NAME")
-            .expect("AZURE_CONTAINER_NAME environment variable expected");
-        let blob_name = "sample.txt";
-        let upload_file_path = "sample.txt";
-        let download_file_path = "output/copy-sample.txt";
-
-        let storage_credentials = StorageCredentials::access_key(account.clone(), access_key);
-        let client =
-            ClientBuilder::new(account, storage_credentials).blob_client(container_name, blob_name);
-
-        assert!(upload_blob(&client, upload_file_path).await.is_ok());
-        assert!(download_blob(&client, download_file_path).await.is_ok());
-        assert!(delete_blob(&client).await.is_ok());
-
-        Ok(())
-    }
 }
