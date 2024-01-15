@@ -21,7 +21,7 @@
 // SOFTWARE.
 //
 // Maintainers:
-// - MGTheTrain 
+// - MGTheTrain
 //
 // Contributors:
 // - TBD
