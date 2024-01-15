@@ -21,6 +21,7 @@ jobs:
         run: echo "semantic_version for branch '${{ github.base_ref }}' is '${{ steps.branch_check.outputs.semantic_version }}'"
     outputs:
       semantic_version: ${{ steps.branch_check.outputs.semantic_version }}
+      
   # Test, scan, build and push Rust related repos or compiled binaries
   ci-ct-job-for-rust-libraries:
     runs-on: ubuntu-latest
