@@ -48,7 +48,7 @@ RUST_LOG=info cargo run -- delete -b blob.txt
 RUST_LOG=info cargo run -- delete --blob-name blob.txt
 
 #####################################################################################################################
-# Building and running the executable without cargo  
+# Running the executable without cargo  
 cargo build
 cp target/debug/azure_blob_handler.exe . # On Windows OS when utilizing Git Bash or WSL
 source secrets.cfg
