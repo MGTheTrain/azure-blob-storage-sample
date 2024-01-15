@@ -1,0 +1,44 @@
+name: CI/CT workflow for Rust libraries packaged via cargo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  set_stage:
+    name: Determine Stage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Set semantic_version
+        id: branch_check
+        run: |
+          semantic_version=$(cat version)
+          echo "semantic_version=$semantic_version" >> $GITHUB_OUTPUT
+      - name: Print Semantic version
+        run: echo "semantic_version for branch '${{ github.base_ref }}' is '${{ steps.branch_check.outputs.semantic_version }}'"
+    outputs:
+      semantic_version: ${{ steps.branch_check.outputs.semantic_version }}
+  # Test, scan, build and push Rust related repos or compiled binaries
+  ci-ct-job-for-rust-libraries:
+    runs-on: ubuntu-latest
+    needs: [set_stage]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Test Rust repository
+        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
+        with:
+          WORKING_DIRECTORY: ./
+  create-git-tags-from-version-file-job:
+    runs-on: ubuntu-latest
+    needs: [set_stage]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Create git tag from version file
+        uses: MGTheTrain/public-github-actions/.github/actions/create-git-tag-from-version-file@main
+        with:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

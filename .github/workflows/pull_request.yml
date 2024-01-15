@@ -1,0 +1,18 @@
+name: CI/CT workflow for Rust libraries
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+
+jobs:
+  ci-ct-job-for-rust-libraries:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Test Rust repository
+        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
+        with:
+          WORKING_DIRECTORY: ./
