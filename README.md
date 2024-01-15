@@ -62,6 +62,7 @@ RUST_LOG=info ./azure_blob_handler upload --blob-name blob.txt --upload-file-pat
 #### Ramp up an Azurite docker container trough docker compose
 
 ```bash
+cd azurite-demo
 sudo docker compose up -d --build
 ```
 

@@ -52,8 +52,8 @@ mod tests {
         let container_name = std::env::var("AZURE_CONTAINER_NAME")
             .expect("AZURE_CONTAINER_NAME environment variable expected");
         let blob_name = "sample.txt";
-        let upload_file_path = "assets/sample.txt";
-        let download_file_path = "output/copy-sample.txt";
+        let upload_file_path = "test/assets/sample.txt";
+        let download_file_path = "test/output/copy-sample.txt";
 
         let handler = AzureBlobHandler::new(&account, &access_key, &container_name, &blob_name);
         handler.upload_blob(upload_file_path).await?;
