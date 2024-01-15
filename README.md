@@ -69,5 +69,5 @@ sudo docker compose up -d --build
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash scripts](./scripts/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
-| Python | Navigate to the [python scripts](./scripts/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
+| Bash | Navigate to the [bash azurite-demo](./azurite-demo/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
+| Python | Navigate to the [python azurite-demo](./azurite-demo/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
