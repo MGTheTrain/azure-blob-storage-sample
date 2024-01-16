@@ -22,7 +22,7 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 Either an Azure Storage Account service container needs to be deployed and accessible or a azurite docker container (**NOTE**: experiments on Windows 10 OS with Virtual Box enabled docker has failed) can be utilized. Therefore:
 
 ```bash
-cd azurite-demo
+cd devops/docker-compose
 sudo docker compose up -d --build
 ```
 
@@ -66,5 +66,5 @@ RUST_LOG=info ./azure_blob_handler upload --blob-name blob.txt --upload-file-pat
 
 | Scripting language | Description | 
 |----------|----------|
-| Bash | Navigate to the [bash azurite-demo](./azurite-demo/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
-| Python | Navigate to the [python azurite-demo](./azurite-demo/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
+| Bash | Navigate to the [bash azurite-demo](./devops/docker-compose/bash/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob up- and downloads to/from the azurite docker container. | 
+| Python | Navigate to the [python azurite-demo](./devops/docker-compose/python/) folder. Go trough the comments in the Dockerfile and utilize it as a reference for testing blob uploads to the the azurite docker container. | 
