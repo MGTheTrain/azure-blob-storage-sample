@@ -1,4 +1,4 @@
-name: Create git tag, run scans and tests on Rust rpos
+name: Create git tag, run scans and tests on Rust repos
 
 on:
   push:

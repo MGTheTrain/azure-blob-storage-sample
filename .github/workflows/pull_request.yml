@@ -1,4 +1,4 @@
-name: Run scans and tests on Rust rpos
+name: Run scans and tests on Rust repos
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  ci-ct-job-for-rust-libraries:
+  ci-ct-job-for-rust-repos:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
