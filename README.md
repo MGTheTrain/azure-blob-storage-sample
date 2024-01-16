@@ -5,8 +5,6 @@
 - [Summary](#summary)
 - [References](#references)
 - [How to use](#how-to-use)
-  - [Rust](#rust)
-  - [Optional](#optional)
 
 ## Summary
 
