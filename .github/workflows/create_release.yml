@@ -30,9 +30,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Test Rust repository
-        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
+        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository-considering-terraform@main
         with:
-          WORKING_DIRECTORY: ./
+          CARGO_TOML_DIRECTORY: ./
+          TF_DIRECTORY: ./devops/terraform
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   create-git-tags-from-version-file-job:
     runs-on: ubuntu-latest
     needs: [set_stage]
