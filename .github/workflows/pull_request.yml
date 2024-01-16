@@ -1,4 +1,4 @@
-name: CI/CT workflow for Rust libraries
+name: Run scans and tests on Rust rpos
 
 on:
   pull_request:

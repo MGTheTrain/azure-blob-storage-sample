@@ -1,4 +1,4 @@
-name: CI/CT workflow for Rust libraries packaged via cargo
+name: Create git tag, run scans and tests on Rust rpos
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       semantic_version: ${{ steps.branch_check.outputs.semantic_version }}
       
   # Test, scan, build and push Rust related repos or compiled binaries
-  ci-ct-job-for-rust-libraries:
+  ci-ct-job-for-rust-repos:
     runs-on: ubuntu-latest
     needs: [set_stage]
     steps:
