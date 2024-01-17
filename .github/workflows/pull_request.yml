@@ -49,9 +49,9 @@ jobs:
 
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
-          cat $template_file | sed "s+<PLACEHOLDER_AZURE_ACCOUNT_NAME>+$azure_account_name+g" > $output_file
-          sed -i "s+<PLACEHOLDER_AZURE_ACCESS_KEY>+$azure_access_key+g" $output_file
-          sed -i "s+<PLACEHOLDER_AZURE_CONTAINER_NAME>+$azure_container_name+g" $output_file
+          cat $template_file | sed "s+PLACEHOLDER_AZURE_ACCOUNT_NAME+$azure_account_name+g" > $output_file
+          sed -i "s+PLACEHOLDER_AZURE_ACCESS_KEY+$azure_access_key+g" $output_file
+          sed -i "s+PLACEHOLDER_AZURE_CONTAINER_NAME+$azure_container_name+g" $output_file
         working-directory: ./  
       - name: Test Rust repository
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
