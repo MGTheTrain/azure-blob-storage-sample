@@ -1,5 +1,7 @@
 [package]
 name = "azure_blob_handler"
+authors = ["MGTheTrain"]
+license-file = "LICENSE"
 version = "0.1.0"
 edition = "2021"
 
