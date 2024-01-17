@@ -5,6 +5,12 @@ on:
     branches:
       - master
 
+env:
+  ARM_SUBSCRIPTION_ID: '${{ secrets.ARM_SUBSCRIPTION_ID }}'
+  ARM_TENANT_ID: '${{ secrets.ARM_TENANT_ID }}'
+  ARM_CLIENT_ID: '${{ secrets.ARM_CLIENT_ID }}'
+  ARM_CLIENT_SECRET: '${{ secrets.ARM_CLIENT_SECRET }}'
+
 jobs:
   set_stage:
     name: Determine Stage
@@ -29,15 +35,47 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Test Rust repository
-        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository-considering-terraform@main
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init 
+          # -backend-config="subscription_id=${{ inputs.AZ_SUBSCRIPTION_ID }}" \
+          # -backend-config="storage_account_name=${{ inputs.AZ_STORAGE_ACCOUNT_NAME }}" \
+          # -backend-config="resource_group_name=${{ inputs.AZ_RESOURCE_GROUP_NAME }}" \
+          # -backend-config="container_name=${{ inputs.AZ_STORAGE_ACCOUNT_CONTAINER_NAME }}" \
+          # -backend-config="key=azure-rg/terraform.tfstate"
+        working-directory: ${{ inputs.TF_DIRECTORY }}
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply --auto-approve
+        continue-on-error: false
+        working-directory: ${{ inputs.TF_DIRECTORY }}
+      - name: Resolve terraform outputs and render template
+        run: |
+          sudo apt-get install -y jq
+
+          echo "azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+          echo "azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+          echo "azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+
+          # Sed commands to replace lines in the template file
+          template_file="templates/secrets.cfg.template"
+          sed -i -e "/^azure_account_name=/s|=.*$|= $(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
+          sed -i -e "/^azure_access_key=/s|=.*$|= $(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
+          sed -i -e "/^azure_container_name=/s|=.*$|= $(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
+          output_file="secrets.cfg"
+          cat "$template_file" > "$output_file"
         with:
-          CARGO_TOML_DIRECTORY: ./
-          TF_DIRECTORY: ./devops/terraform
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          WORKING_DIRECTORY: ./  
+      - name: Test Rust repository
+        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
+        with:
+          WORKING_DIRECTORY: ./
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy --auto-approve
+        continue-on-error: false
+        working-directory: ${{ inputs.TF_DIRECTORY }}
   create-git-tags-from-version-file-job:
     runs-on: ubuntu-latest
     needs: [set_stage]

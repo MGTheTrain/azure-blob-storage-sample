@@ -52,7 +52,7 @@ variable "storage_account_tier" {
 }
 
 variable "number_of_storage_accounts" {
-  default     = 0
+  default     = 1
   description = "The total number of Storage Account Services to deploy."
   type        = number
 }
