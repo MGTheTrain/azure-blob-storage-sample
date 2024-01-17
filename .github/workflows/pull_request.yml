@@ -37,15 +37,17 @@ jobs:
         run: |
           sudo apt-get install -y jq
 
-          echo "azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
-          echo "azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
-          echo "azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+          cd ./devops/terraform
+          azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')
+          azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')
+          azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')
+          cd -
 
           # Sed commands to replace lines in the template file
           template_file="templates/secrets.cfg.template"
-          sed -i -e "/^azure_account_name=/s|=.*$|= $(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
-          sed -i -e "/^azure_access_key=/s|=.*$|= $(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
-          sed -i -e "/^azure_container_name=/s|=.*$|= $(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')|" "$template_file"
+          sed -i -e "/^azure_account_name=/s|=.*$|= ${azure_account_name}|" "$template_file"
+          sed -i -e "/^azure_access_key=/s|=.*$|= ${azure_access_key}|" "$template_file"
+          sed -i -e "/^azure_container_name=/s|=.*$|= ${azure_container_name}|" "$template_file"
           output_file="secrets.cfg"
           cat "$template_file" > "$output_file"
         working-directory: ./  
