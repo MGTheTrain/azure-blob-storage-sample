@@ -6,6 +6,12 @@ on:
       - develop
       - master
 
+env:
+  ARM_SUBSCRIPTION_ID: '${{ secrets.ARM_SUBSCRIPTION_ID }}'
+  ARM_TENANT_ID: '${{ secrets.ARM_TENANT_ID }}'
+  ARM_CLIENT_ID: '${{ secrets.ARM_CLIENT_ID }}'
+  ARM_CLIENT_SECRET: '${{ secrets.ARM_CLIENT_SECRET }}'
+
 jobs:
   ci-ct-job-for-rust-repos:
     runs-on: ubuntu-latest
