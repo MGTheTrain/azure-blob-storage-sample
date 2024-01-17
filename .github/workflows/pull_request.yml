@@ -43,10 +43,6 @@ jobs:
           azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')
           cd -
 
-          echo "azure_account_name: $azure_account_name"
-          echo "azure_access_key: $azure_access_key"
-          echo "azure_container_name: $azure_container_name"
-
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
           cat $template_file | sed "s+PLACEHOLDER_AZURE_ACCOUNT_NAME+${azure_account_name}+g" > $output_file
