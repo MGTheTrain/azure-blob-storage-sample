@@ -61,7 +61,7 @@ jobs:
           cd -
 
           # Sed commands to replace lines in the template file
-          template_file="templates/secrets.cfg.template"
+          template_file="templates/secrets.template.cfg"
           sed -i -e "/^azure_account_name=/s|=.*$|= ${azure_account_name}|" "$template_file"
           sed -i -e "/^azure_access_key=/s|=.*$|= ${azure_access_key}|" "$template_file"
           sed -i -e "/^azure_container_name=/s|=.*$|= ${azure_container_name}|" "$template_file"
