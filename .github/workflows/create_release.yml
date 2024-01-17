@@ -60,7 +60,6 @@ jobs:
           azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')
           cd -
 
-          # Sed commands to replace lines in the template file
           template_file="templates/secrets.template.cfg"
           output_file="secrets.cfg"
           cat $template_file | sed "s+<PLACEHOLDER_AZURE_ACCOUNT_NAME>+${azure_account_name}+g" > $output_file
