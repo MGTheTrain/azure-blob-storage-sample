@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Initial setup
+- Initial setup including modules, a cli application, tests and automation pipelines
 
 ### Fixed
 

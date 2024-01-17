@@ -1,0 +1,60 @@
+name: Run scans and tests on Rust repos
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+
+env:
+  ARM_SUBSCRIPTION_ID: '${{ secrets.ARM_SUBSCRIPTION_ID }}'
+  ARM_TENANT_ID: '${{ secrets.ARM_TENANT_ID }}'
+  ARM_CLIENT_ID: '${{ secrets.ARM_CLIENT_ID }}'
+  ARM_CLIENT_SECRET: '${{ secrets.ARM_CLIENT_SECRET }}'
+
+jobs:
+  ci-ct-job-for-rust-repos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Terraform Init
+        id: init
+        run: |
+          terraform init 
+          # -backend-config="subscription_id=${{ inputs.AZ_SUBSCRIPTION_ID }}" \
+          # -backend-config="storage_account_name=${{ inputs.AZ_STORAGE_ACCOUNT_NAME }}" \
+          # -backend-config="resource_group_name=${{ inputs.AZ_RESOURCE_GROUP_NAME }}" \
+          # -backend-config="container_name=${{ inputs.AZ_STORAGE_ACCOUNT_CONTAINER_NAME }}" \
+          # -backend-config="key=azure-rg/terraform.tfstate"
+        working-directory: ./devops/terraform
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply --auto-approve
+        continue-on-error: false
+        working-directory: ./devops/terraform
+      - name: Resolve terraform outputs and render template
+        run: |
+          sudo apt-get install -y jq
+
+          cd ./devops/terraform
+          azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')
+          azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')
+          azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')
+          cd -
+
+          template_file="templates/secrets.template.cfg"
+          output_file="secrets.cfg"
+          cat $template_file | sed "s+PLACEHOLDER_AZURE_ACCOUNT_NAME+${azure_account_name}+g" > $output_file
+          sed -i "s|PLACEHOLDER_AZURE_ACCESS_KEY|${azure_access_key}|g" $output_file
+          sed -i "s+PLACEHOLDER_AZURE_CONTAINER_NAME+${azure_container_name}+g" $output_file
+        working-directory: ./  
+      - name: Test Rust repository
+        uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
+        with:
+          WORKING_DIRECTORY: ./
+      - name: Terraform Destroy
+        id: destroy
+        run: terraform destroy --auto-approve
+        continue-on-error: false
+        working-directory: ./devops/terraform

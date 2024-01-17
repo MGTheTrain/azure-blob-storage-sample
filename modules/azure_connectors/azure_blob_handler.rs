@@ -1,4 +1,3 @@
-
 // The MIT License
 //
 // Copyright (c) 2024 MGTheTrain
@@ -22,7 +21,7 @@
 // SOFTWARE.
 //
 // Maintainers:
-// - MGTheTrain 
+// - MGTheTrain
 //
 // Contributors:
 // - TBD
