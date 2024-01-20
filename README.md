@@ -21,7 +21,9 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 
 Either 
 - an Azure Storage Account service container needs to be deployed and accessible or 
-- an azurite docker container can be utilized. Therefore:
+- an azurite docker container can be utilized. 
+
+In order to ramp up the azurite container execute:
 
 ```bash
 cd devops/docker-compose
