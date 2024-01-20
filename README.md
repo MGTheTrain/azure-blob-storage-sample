@@ -19,12 +19,16 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 
 ### Precondition
 
-Either an Azure Storage Account service container needs to be deployed and accessible or a azurite docker container (**NOTE**: experiments on Windows 10 OS with Virtual Box enabled docker has failed) can be utilized. Therefore:
+Either 
+- an Azure Storage Account service container needs to be deployed and accessible or 
+- an azurite docker container can be utilized. Therefore:
 
 ```bash
 cd devops/docker-compose
 sudo docker compose up -d --build
 ```
+
+**NOTE**: Experiments on Windows 10 OS with Virtual Box enabled docker and a running azurite docker container has failed
 
 ### Build and run compiled source code
 
