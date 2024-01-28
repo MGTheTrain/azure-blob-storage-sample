@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 28-01-2024
+
+### Added
+
+/
+
+### Fixed
+
+/
+
+### Changed
+
+- Rename and update workflows
+
+### Removed
+
+/
+
 ## [0.1.2] - 20-01-2024
 
 ### Added
