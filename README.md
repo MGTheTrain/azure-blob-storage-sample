@@ -34,10 +34,11 @@ sudo docker compose up -d --build
 
 ### Build and run compiled source code
 
-Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `PLACEHOLDER_*` values. The [test_azure_blob_handler.rs](./test/test_azure_blob_handler.rs) and [main.rs](./src/main.rs) will export the environment variables trough the `secrets.cfg` file.
+Create from the [secrets.template.cfg](./templates/secrets.template.cfg) in the [templates folder](./templates/) a `secrets.cfg` file in the project root directory and replace the `PLACEHOLDER_*` values. The [test_azure_blob_handler.rs](./test/test_azure_blob_handler.rs) and [main.rs](./src/main.rs) require environment variables listed in the `secrets.cfg` file.
 Afterwards execute the following to run the tests:
 
 ```bash
+source secrets.cfg
 cargo test
 # for more logs execute
 RUST_LOG=info cargo test
