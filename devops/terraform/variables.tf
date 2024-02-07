@@ -67,7 +67,7 @@ variable "storage_account_replication_type" {
 }
 
 variable "storage_account_kind" {
-  default     = "BlobStorage"
+  default     = "StorageV2"
   description = "The Azure Storage Account Kind."
   type        = string
 }
