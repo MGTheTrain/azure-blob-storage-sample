@@ -72,6 +72,8 @@ jobs:
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
         with:
           WORKING_DIRECTORY: ./
+      - name: Sleep for 10 seconds
+        run: sleep 10
       - name: Terraform Destroy
         id: destroy
         run: terraform destroy --auto-approve
@@ -87,4 +89,3 @@ jobs:
         uses: MGTheTrain/public-github-actions/.github/actions/create-git-tag-from-version-file@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-          
