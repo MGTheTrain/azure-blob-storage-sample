@@ -71,8 +71,8 @@ jobs:
           AZURE_ACCOUNT_NAME: ${{ steps.resolve_terraform_outputs.outputs.azure_account_name }}
           AZURE_ACCESS_KEY: ${{ steps.resolve_terraform_outputs.outputs.azure_access_key }}
           AZURE_CONTAINER_NAME: ${{ steps.resolve_terraform_outputs.outputs.azure_container_name }}
-      - name: Sleep for 10 seconds
-        run: sleep 10
+      - name: Sleep for 16 seconds
+        run: sleep 16
       - name: Terraform Destroy
         id: destroy
         run: terraform destroy --auto-approve
