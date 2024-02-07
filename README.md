@@ -4,7 +4,7 @@
 
 - [Summary](#summary)
 - [References](#references)
-- [How to use](#how-to-use)
+- [Getting started](#getting-started)
 
 ## Summary
 
@@ -15,13 +15,13 @@ Repository demonstrating how to manage blobs in public Azure Storage Account Ser
 - [azure_storage_blobs samples](https://github.com/Azure/azure-sdk-for-rust/tree/main/sdk/storage_blobs)
 - [Clap cli crate - Handling arguments and subcommands](https://rust-cli-recommendations.sunshowers.io/handling-arguments.html)
 
-## How to use
+## Getting started
 
 ### Precondition
 
-Either 
-- an Azure Storage Account service container needs to be deployed and accessible or 
-- an azurite docker container can be utilized. 
+- Install the [Docker engine](https://docs.docker.com/engine/install/)
+- In VS Code install the `Dev Containers` extension
+- Either an Azure Storage Account service container needs to be deployed and accessible or an azurite docker container can be utilized. 
 
 In order to ramp up the azurite container execute:
 
