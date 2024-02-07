@@ -36,9 +36,6 @@ mod tests {
     pub async fn test_azure_blob_storage_methods() -> Result<(), Box<dyn std::error::Error>> {
         env_logger::init();
 
-        let env_file_path = "secrets.cfg";
-        dotenv::from_path(env_file_path).ok();
-
         let mut account = String::from("devstoreaccount1");
         let mut access_key = String::from("Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
 

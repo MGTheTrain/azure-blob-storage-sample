@@ -35,28 +35,27 @@ jobs:
         run: terraform apply --auto-approve
         continue-on-error: false
         working-directory: ./devops/terraform
-      - name: Resolve terraform outputs and render template
+      - name: Resolve terraform outputs
+        id: resolve_terraform_outputs
         run: |
           sudo apt-get install -y jq
 
           cd ./devops/terraform
-          azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')
-          azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')
-          azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')
+          echo "azure_account_name=$(terraform output -json storage_account_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+          echo "azure_access_key=$(terraform output -json storage_account_primary_access_key_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
+          echo "azure_container_name=$(terraform output -json storage_account_container_name_list | jq -r --argjson index 0 '.[$index]')" >> $GITHUB_OUTPUT
           cd -
-
-          template_file="templates/secrets.template.cfg"
-          output_file="secrets.cfg"
-          cat $template_file | sed "s+PLACEHOLDER_AZURE_ACCOUNT_NAME+${azure_account_name}+g" > $output_file
-          sed -i "s|PLACEHOLDER_AZURE_ACCESS_KEY|${azure_access_key}|g" $output_file
-          sed -i "s+PLACEHOLDER_AZURE_CONTAINER_NAME+${azure_container_name}+g" $output_file
         working-directory: ./  
       - name: Test Rust repository
         uses: MGTheTrain/public-github-actions/.github/actions/test-rust-repository@main
         with:
           WORKING_DIRECTORY: ./
-      - name: Sleep for 10 seconds
-        run: sleep 10
+        env:
+          AZURE_ACCOUNT_NAME: ${{ steps.resolve_terraform_outputs.outputs.azure_account_name }}
+          AZURE_ACCESS_KEY: ${{ steps.resolve_terraform_outputs.outputs.azure_access_key }}
+          AZURE_CONTAINER_NAME: ${{ steps.resolve_terraform_outputs.outputs.azure_container_name }}
+      - name: Sleep for 16 seconds
+        run: sleep 16
       - name: Terraform Destroy
         id: destroy
         run: terraform destroy --auto-approve
