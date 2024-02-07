@@ -65,16 +65,3 @@ variable "storage_account_replication_type" {
   EOF
   type        = string
 }
-
-variable "storage_account_kind" {
-  default     = "StorageV2"
-  description = "The Azure Storage Account Kind."
-  type        = string
-}
-
-# Azure Storage Account Container
-variable "storage_account_container_access_type" {
-  default     = "private"
-  description = "The Storage Account Container Instance Type."
-  type        = string
-}
