@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 
 
 - Add [devcontainer.json](./.devcontainer/devcontainer.json)
+- Add required [terraform provider block](./devops/terraform/provider.tf) specifying the version of the azurerm provider
 
 ## [0.1.3] - 28-01-2024
 
