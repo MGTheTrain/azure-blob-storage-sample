@@ -87,3 +87,4 @@ jobs:
         uses: MGTheTrain/public-github-actions/.github/actions/create-git-tag-from-version-file@main
         with:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          
