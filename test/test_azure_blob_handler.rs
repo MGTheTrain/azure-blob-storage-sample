@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #[cfg(test)]
 mod tests {
     use common_modules::connectors::azure_blob_handler::AzureBlobHandler;
