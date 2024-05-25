@@ -23,6 +23,7 @@
 #[cfg(test)]
 mod tests {
     use common_modules::connectors::azure_blob_handler::AzureBlobHandler;
+    use common_modules::connectors::blob_connector::BlobConnector;
     use common_modules::set_env_var;
 
     // In order to run the test execute: `RUST_LOG=info cargo test`
