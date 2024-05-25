@@ -20,20 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-use colored::Colorize;
-use log::info;
-use std::env;
+use azure_core::Error;
+use async_trait::async_trait;
 
-pub mod connectors {
-    pub mod azure_blob_handler;
-}
-
-pub fn set_env_var(env_var_name: &str) -> Option<String> {
-    match env::var(env_var_name) {
-        Ok(value) => Some(value),
-        Err(_) => {
-            info!("{} is not set.", env_var_name.blue());
-            None
-        }
-    }
+#[async_trait]
+trait BlobConnector {
+    async fn upload_blob(&self, file_path: &str) -> Result<(), Error>;
+    async fn download_blob(&self, file_path: &str) -> Result<(), Error>;
+    async fn delete_blob(&self) -> Result<(), Error>;
 }
