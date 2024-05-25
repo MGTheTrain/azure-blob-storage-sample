@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 25-05-2024
+
+### Added
+
+- Add `async-trait` crate
+- Modify license
+
 ## [0.1.4] - 07-02-2024
 
 ### Added 
