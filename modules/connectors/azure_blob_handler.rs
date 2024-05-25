@@ -33,6 +33,9 @@ use azure_storage_blobs::prelude::*;
 use colored::Colorize;
 use log::info;
 
+use async_trait::async_trait;
+use crate::connectors::blob_connector::BlobConnector;
+
 pub struct AzureBlobHandler {
     client: BlobClient,
 }
@@ -46,8 +49,11 @@ impl AzureBlobHandler {
 
         AzureBlobHandler { client }
     }
+}
 
-    pub async fn upload_blob(&self, file_path: &str) -> Result<(), Error> {
+#[async_trait]
+impl BlobConnector for AzureBlobHandler {
+    async fn upload_blob(&self, file_path: &str) -> Result<(), Error> {
         let f = File::open(file_path)?;
         let mut reader = BufReader::new(f);
         let mut buffer = Vec::new();
@@ -63,7 +69,7 @@ impl AzureBlobHandler {
         Ok(())
     }
 
-    pub async fn download_blob(&self, file_path: &str) -> Result<(), Error> {
+    async fn download_blob(&self, file_path: &str) -> Result<(), Error> {
         let data = self.client.get_content().await?;
 
         let mut file = fs::OpenOptions::new()
@@ -80,7 +86,7 @@ impl AzureBlobHandler {
         Ok(())
     }
 
-    pub async fn delete_blob(&self) -> Result<(), Error> {
+    async fn delete_blob(&self) -> Result<(), Error> {
         self.client.delete().await?;
 
         let colored_string =

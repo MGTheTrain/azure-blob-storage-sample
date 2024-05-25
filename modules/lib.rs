@@ -26,6 +26,7 @@ use std::env;
 
 pub mod connectors {
     pub mod azure_blob_handler;
+    pub mod blob_connector;
 }
 
 pub fn set_env_var(env_var_name: &str) -> Option<String> {
