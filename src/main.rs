@@ -19,12 +19,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-//
-// Maintainers:
-// - MGTheTrain
-//
-// Contributors:
-// - TBD
+
 
 use std::{
     env,
@@ -38,7 +33,7 @@ use clap::{Parser, Subcommand};
 
 use colored::Colorize;
 
-use common_modules::azure_connectors::azure_blob_handler::AzureBlobHandler;
+use common_modules::connectors::azure_blob_handler::AzureBlobHandler;
 use common_modules::set_env_var;
 
 #[derive(Parser, Debug)]
