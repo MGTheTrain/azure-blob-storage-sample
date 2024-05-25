@@ -24,7 +24,7 @@ use azure_core::Error;
 use async_trait::async_trait;
 
 #[async_trait]
-pub trait BlobConnector {
+pub trait BlobConnector: Send + Sync {
     async fn upload_blob(&self, file_path: &str) -> Result<(), Error>;
     async fn download_blob(&self, file_path: &str) -> Result<(), Error>;
     async fn delete_blob(&self) -> Result<(), Error>;
