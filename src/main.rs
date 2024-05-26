@@ -40,7 +40,7 @@ use common_modules::set_env_var;
 #[clap(
     author = "MGTheTrain",
     version = "1.0.0",
-    about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) in an Azure Storage Account Container."
+    about = "A Cli tool enabling blob operations (deletion, upload and download of blobs) on Azure Storage Account Container."
 )]
 struct Cli {
     #[clap(subcommand)]
