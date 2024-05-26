@@ -11,7 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `async-trait` crate
+- Add [blob_connector.rs](./modules/connectors/blob_connector.rs) and include `async-trait` crate 
+
+### Changed
+
 - Modify license
 
 ## [0.1.4] - 07-02-2024
@@ -21,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add [devcontainer.json](./.devcontainer/devcontainer.json)
 - Add required [terraform provider block](./devops/terraform/provider.tf) specifying the version of the azurerm provider
 
-## Removed
+### Removed
 
 - Eliminate the requirement to mandate the rendering of the `secrets.cfg` file from [secrets.template.cfg](./templates/secrets.template.cfg) in the workflow. Adjust [test_azure_blob_handler.rs](./test/test_azure_blob_handler.rs) accordingly
 
